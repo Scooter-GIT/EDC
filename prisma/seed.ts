@@ -5,26 +5,25 @@ const prisma = new PrismaClient()
 async function main() {
   // Create initial categories
   const categories = [
-    { name: 'Knives', slug: 'knives', description: 'EDC Knives and Multi-tools' },
-    { name: 'Wallets', slug: 'wallets', description: 'Minimalist and Traditional Wallets' },
-    { name: 'Flashlights', slug: 'flashlights', description: 'Portable Illumination Tools' }
+    { name: 'Knives', description: 'EDC Knives and Multi-tools' },
+    { name: 'Wallets', description: 'Minimalist and Traditional Wallets' },
+    { name: 'Flashlights', description: 'Portable Illumination Tools' }
   ]
 
   for (const category of categories) {
     await prisma.category.upsert({
-      where: { slug: category.slug },
+      where: { name: category.name },
       update: {},
       create: {
         name: category.name,
-        slug: category.slug,
         description: category.description
       },
     })
   }
 
   // Get the created category
-  const knivesCategory = await prisma.category.findUnique({
-    where: { slug: 'knives' }
+  const knivesCategory = await prisma.category.findFirst({
+    where: { name: 'Knives' }
   })
 
   if (knivesCategory) {
@@ -59,8 +58,7 @@ async function main() {
         images: {
           create: {
             url: '/placeholder.svg',
-            alt: 'Benchmade 940 Osborne Knife',
-            primary: true
+            alt: 'Benchmade 940 Osborne Knife'
           }
         }
       }

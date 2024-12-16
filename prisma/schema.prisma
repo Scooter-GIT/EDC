@@ -8,31 +8,30 @@ datasource db {
 }
 
 model Product {
-  id          String   @id @default(cuid())
-  slug        String   @unique
-  name        String
-  brand       String
-  description String
-  currentPrice Float?
-  listPrice    Float?
-  category    Category @relation(fields: [categoryId], references: [id])
-  categoryId  String
-  images      Image[]
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  name          String
+  brand         String
+  description   String
+  currentPrice  Float?
+  listPrice     Float?
+  category      Category @relation(fields: [categoryId], references: [id])
+  categoryId    String
+  images        Image[]
   specifications Json
-  materials   String[]
-  dimensions  Json?
-  weight      Float?
-  asin        String?
-  amazonUrl   String?
-  reviewCount Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  materials     String[]
+  dimensions    Json?
+  weight        Float?
+  asin          String?
+  amazonUrl     String?
+  reviewCount   Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model Category {
   id          String    @id @default(cuid())
-  slug        String    @unique
-  name        String
+  name        String    @unique
   description String?
   products    Product[]
 }
@@ -43,5 +42,4 @@ model Image {
   alt       String
   product   Product  @relation(fields: [productId], references: [id])
   productId String
-  primary   Boolean  @default(false)
 }
