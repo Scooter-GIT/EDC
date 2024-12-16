@@ -14,17 +14,21 @@ async function main() {
     await prisma.category.upsert({
       where: { slug: category.slug },
       update: {},
-      create: category,
+      create: {
+        name: category.name,
+        slug: category.slug,
+        description: category.description
+      },
     })
   }
 
-  // Get the created categories
+  // Get the created category
   const knivesCategory = await prisma.category.findUnique({
     where: { slug: 'knives' }
   })
 
   if (knivesCategory) {
-    // Add some sample products
+    // Add a sample product
     await prisma.product.upsert({
       where: { slug: 'benchmade-940-osborne' },
       update: {},
@@ -51,11 +55,10 @@ async function main() {
           height: 0.44,
           unit: "inches"
         },
-        weight: 82.2, // in grams
-        featured: true,
+        weight: 82.2,
         images: {
           create: {
-            url: '/placeholder.svg?height=500&width=500',
+            url: '/placeholder.svg',
             alt: 'Benchmade 940 Osborne Knife',
             primary: true
           }
@@ -75,4 +78,3 @@ main()
   .finally(async () => {
     await prisma.$disconnect()
   })
-
