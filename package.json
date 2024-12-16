@@ -2,17 +2,17 @@
   "name": "carrythis",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma migrate deploy && next build",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build",
+    "build": "prisma generate && next build",
+    "vercel-build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
-    "postinstall": "prisma generate",
-    "test-db": "node test-db-connection.js",
-    "type-check": "tsc --noEmit"
+    "seed": "ts-node prisma/seed.ts",
+    "postinstall": "prisma generate"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
